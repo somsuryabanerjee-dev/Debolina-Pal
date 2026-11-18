@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy National Princess Day 👑</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Cinzel Decorative, Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for Royal Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            royal: ['"Cinzel Decorative"', 'serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            blush: '#FFF0F5',
+            roseGold: '#E09F9D',
+            royalGold: '#D4AF37',
+            deepBerry: '#6B214A',
+            softLavender: '#F3E8FF',
+            starbucksGreen: '#00704A',
+            minisoRed: '#E60012',
+          },
+          animation: {
+            'float-slow': 'float 5s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 25px rgba(212, 175, 55, 0.45), 0 0 50px rgba(244, 114, 182, 0.35)' },
+              '50%': { boxShadow: '0 0 40px rgba(212, 175, 55, 0.75), 0 0 70px rgba(244, 114, 182, 0.6)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% center' },
+              '100%': { backgroundPosition: '200% center' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #fff5f8 0%, #fce7f3 35%, #f3e8ff 75%, #fff1f2 100%);
+      color: #4a1535;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism Royal Card */
+    .glass-royal {
+    /* Portrait Orientation Fix: 395052_2.jpg is rotated 90deg CCW in raw file, so rotate(90deg) makes her upright */
+    .princess-portrait-wrapper {
+      position: relative;
+      width: 250px;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 9999px;
+      border: 5px solid #D4AF37;
+      background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+    }
+
+    @media (min-width: 640px) {
+      .princess-portrait-wrapper {
+        width: 295px;
+        height: 375px;
+      }
+    }
+
+    .princess-portrait-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: center 42%;
+      transform: translate(-50%, -50%) rotate(90deg) scale(1.38);
+      transform-origin: center center;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .princess-portrait-img.upright-custom {
+      transform: translate(-50%, -50%) scale(1.02);
+    }
+
+    @media (min-width: 640px) {
+      .princess-portrait-img {
+        transform: translate(-50%, -50%) rotate(90deg) scale(1.38);
+      }
+    }
+
+    .princess-portrait-wrapper:hover .princess-portrait-img {
+      transform: translate(-50%, -50%) rotate(90deg) scale(1.44);
+    }
+
+    .princess-portrait-wrapper:hover .princess-portrait-img.upright-custom {
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+
+    /* Hide scrollbar for compact horizontal mobile nav */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Interactive Card Flip */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .flip-inner {
+      transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-front, .flip-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .flip-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Wheel Pointer & Smooth Spin */
+    #royalWheelCanvas {
+      transition: transform 4.5s cubic-bezier(0.15, 0.85, 0.22, 1);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fff0f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #f472b6, #d4af37);
+      border-radius: 999px;
+    }
+
+    /* Ticket Perforation Cutouts */
+    .ticket-cutout-left, .ticket-cutout-right {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background-color: #fce7f3;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 1.5px solid rgba(212, 175, 55, 0.45);
+    }
+    .ticket-cutout-left { left: -15px; }
+    .ticket-cutout-right { right: -15px; }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-pink-200 selection:text-deepBerry">
+
+  <!-- Background Floating Petals & Sparkles Canvas -->
+  <canvas id="sparkleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Toast Notification Banner (Replaces alert) -->
+  <div id="royalToast" class="fixed top-5 right-5 z-50 transform translate-x-[150%] transition-transform duration-300 max-w-xs sm:max-w-sm">
+    <div class="glass-royal rounded-2xl px-4 py-3 shadow-xl border-2 border-royalGold flex items-center gap-3 bg-white/95">
+      <span id="toastEmoji" class="text-2xl">👑</span>
+      <div>
+        <p id="toastTitle" class="font-serif font-bold text-sm text-deepBerry">Royal Decree Updated!</p>
+        <p id="toastMessage" class="text-xs text-pink-800/80">Added to your Princess Day itinerary.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Royal Header Bar (Fixed single-row mobile layout to prevent hero overlap) -->
+  <header class="fixed top-0 left-0 right-0 z-[1000] border-b border-pink-200/80 shadow-sm" style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(255, 245, 248, 0.96);">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 h-14 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <span class="text-xl sm:text-2xl">👑</span>
+        <span class="font-royal font-bold text-xs sm:text-base tracking-wider text-deepBerry whitespace-nowrap">PRINCESS VIP</span>
+      </div>
+      <nav class="flex items-center gap-1.5 sm:gap-3 text-[11px] sm:text-sm font-semibold text-pink-900 overflow-x-auto no-scrollbar py-1">
+        <a href="#starbucks-section" class="px-2.5 py-1 rounded-full bg-white/80 hover:bg-pink-100 border border-pink-200/70 transition whitespace-nowrap shrink-0">☕ Starbucks</a>
+        <a href="#miniso-section" class="px-2.5 py-1 rounded-full bg-white/80 hover:bg-pink-100 border border-pink-200/70 transition whitespace-nowrap shrink-0">🛍️ Miniso</a>
+        <a href="#wheel-section" class="px-2.5 py-1 rounded-full bg-white/80 hover:bg-pink-100 border border-pink-200/70 transition whitespace-nowrap shrink-0">🎡 Wheel</a>
+        <a href="#vip-pass-section" class="px-2.5 py-1 rounded-full bg-gradient-to-r from-pink-500 to-amber-500 text-white shadow-sm hover:opacity-95 transition whitespace-nowrap shrink-0">🎟️ Pass</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION: Centerpiece Portrait & Royal Decree -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 pt-24 sm:pt-28 pb-20 space-y-16">
+    
+    <section class="text-center flex flex-col items-center">
+      <!-- Royal Proclamation Pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 border border-royalGold/50 shadow-sm mb-4 animate-float-slow">
+        <span class="text-amber-500">✨</span>
+        <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-deepBerry">Official Royal Proclamation • November 18</span>
+        <span class="text-amber-500">✨</span>
+      </div>
+
+      <!-- Main Display Headline -->
+      <h1 class="font-royal text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight text-deepBerry mb-3">
+        Happy National <br class="sm:hidden" />
+        <span class="text-gold-shimmer">Princess Day!</span>
+      </h1>
+      <p class="font-serif italic text-base sm:text-xl text-pink-900/85 max-w-2xl mb-8">
+        Today the entire kingdom revolves around you. Customize your royal Starbucks order, raid Miniso on an unlimited royal budget, and claim every single pampering perk you deserve.
+      </p>
+
+      <!-- CENTERPIECE PORTRAIT OF THE PRINCESS (395052.jpg oriented upright!) -->
+      <div class="relative inline-flex flex-col items-center my-2">
+        <!-- Floating Golden Crown SVG Above Frame -->
+        <div class="z-20 -mb-6 animate-float-slow drop-shadow-[0_6px_12px_rgba(212,175,55,0.55)]">
+          <svg width="84" height="58" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 56L4 18L30 36L50 10L70 36L96 18L90 56H10Z" fill="url(#crownGrad)" stroke="#926F14" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="10" y="56" width="80" height="9" rx="4.5" fill="url(#crownGrad)" stroke="#926F14" stroke-width="2.5"/>
+            <circle cx="50" cy="8" r="5" fill="#FF6B9E" stroke="#926F14" stroke-width="2"/>
+            <circle cx="4" cy="16" r="4.5" fill="#FDE047" stroke="#926F14" stroke-width="2"/>
+            <circle cx="96" cy="16" r="4.5" fill="#FDE047" stroke="#926F14" stroke-width="2"/>
+            <circle cx="50" cy="40" r="4.5" fill="#FF4D8D"/>
+            <circle cx="30" cy="44" r="3.5" fill="#A855F7"/>
+            <circle cx="70" cy="44" r="3.5" fill="#A855F7"/>
+            <defs>
+              <linearGradient id="crownGrad" x1="4" y1="10" x2="96" y2="65" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFF099"/>
+                <stop offset="0.45" stop-color="#EAB308"/>
+                <stop offset="1" stop-color="#B45309"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Gilded Frame Container -->
+        <div class="relative p-2.5 rounded-full bg-gradient-to-tr from-amber-500 via-pink-300 to-yellow-300 animate-pulse-glow">
+          <!-- Floating Orbiting Badges -->
+          <span class="hidden sm:flex items-center gap-1.5 absolute -left-16 top-12 z-20 bg-white/95 border border-pink-300 px-3 py-1.5 rounded-full shadow-md text-xs font-bold text-deepBerry animate-float-slow">
+            💖 100% Royalty
+          </span>
+          <span class="hidden sm:flex items-center gap-1.5 absolute -right-16 bottom-14 z-20 bg-white/95 border border-amber-300 px-3 py-1.5 rounded-full shadow-md text-xs font-bold text-deepBerry animate-float-slow" style="animation-delay: 1.5s;">
+            ✨ Main Character
+          </span>
+
+          <!-- Upright Portrait Frame -->
+          <div class="princess-portrait-wrapper shadow-inner">
+            <img
+              id="heroPrincessPortrait"
+              src="debolinadidi.jpeg"
+              alt="Her Royal Highness on Princess Day"
+              class="princess-portrait-img"
+              onerror="handlePortraitFallback(this)"
+            />
+          </div>
+        </div>
+
+        <!-- Nameplate Ribbon -->
+        <div class="z-20 -mt-5 px-6 py-2 rounded-full bg-gradient-to-r from-deepBerry via-pink-700 to-deepBerry text-white border-2 border-royalGold shadow-lg">
+          <p class="font-royal text-xs sm:text-sm tracking-widest uppercase">Her Royal Highness • Queen of Everything</p>
+        </div>
+
+        <!-- Subtle Photo Upload / Orientation Controls -->
+        <div class="mt-3 flex items-center justify-center gap-2">
+          <label for="princessPhotoInput" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/85 hover:bg-white border border-pink-300/80 text-[11px] font-semibold text-pink-900 shadow-sm cursor-pointer transition">
+            <span>📸</span>
+            <span>Change / Re-upload Photo</span>
+          </label>
+          <button type="button" onclick="togglePortraitRotation()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/85 hover:bg-white border border-amber-300/80 text-[11px] font-semibold text-amber-900 shadow-sm cursor-pointer transition" title="Rotate Photo">
+            <span>🔄</span>
+            <span>Rotate</span>
+          </button>
+          <input id="princessPhotoInput" type="file" accept="image/*" class="hidden" onchange="handleCustomPhotoUpload(event)" />
+        </div>
+      </div>
+
+      <!-- Interactive "Claim Your Crown" Action Button -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <button
+          id="claimCrownBtn"
+          onclick="claimRoyalCrown()"
+          class="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+        >
+          <span class="text-2xl group-hover:rotate-12 transition-transform">👑</span>
+          <span id="claimCrownText">Claim Your Crown & Royal Fanfare</span>
+          <span class="text-xl">✨</span>
+        </button>
+      </div>
+      <p id="crownStatusNote" class="mt-2.5 text-xs font-medium text-pink-800/75">
+        Tap to trigger royal chimes, confetti & unlock your VIP day pass!
+      </p>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE PRINCESS DAY ITINERARY & PAMPERING MENU -->
+    <section class="space-y-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-widest text-pink-600">Step 1 • Curate Your Royal Experience</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-deepBerry mt-1">Build Your Dream Princess Itinerary</h2>
+        <p class="text-sm sm:text-base text-pink-900/75 mt-2">
+          Every selection automatically updates your Official VIP Princess Voucher below. No limits, no stress—just pure princess treatment.
+        </p>
+      </div>
+
+      <!-- TWO FEATURED CARDS: STARBUCKS + MINISO -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- 1. STARBUCKS ROYAL COFFEE & MATCHA RUN -->
+        <div id="starbucks-section" class="glass-royal rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-emerald-600/25 relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-emerald-500/10 pointer-events-none"></div>
+          
+          <div>
+            <div class="flex items-center justify-between gap-3 mb-5">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-starbucksGreen text-white flex items-center justify-center text-2xl shadow-md">
+                  ☕
+                </div>
+                <div>
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Royal Caffeine & Refreshers</span>
+                  <h3 class="font-serif text-2xl font-bold text-deepBerry mt-0.5">Starbucks Royal Run</h3>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">On The House 💚</span>
+            </div>
+
+            <!-- Drink Selector -->
+            <div class="mb-5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-pink-900/80 mb-2.5">1. Choose Your Signature Drink</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="starbucksDrinksGrid">
+                <button type="button" onclick="selectStarbucksDrink('Pink Drink Refresher', '🍓', this)" class="sb-drink-btn active-sb text-left p-3 rounded-2xl border-2 border-emerald-600 bg-emerald-50/90 transition flex items-center gap-2.5 cursor-pointer">
+                  <span class="text-2xl">🍓</span>
+                  <div>
+                    <p class="font-bold text-sm text-deepBerry">Pink Drink</p>
+                    <p class="text-[11px] text-emerald-800">Strawberry Açaí & Coconut</p>
+                  </div>
+                </button>
+                <button type="button" onclick="selectStarbucksDrink('Iced Caramel Macchiato', ' caramel', this)" class="sb-drink-btn text-left p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 hover:border-emerald-400 transition flex items-center gap-2.5 cursor-pointer">
+                  <span class="text-2xl">🧊</span>
+                  <div>
+                    <p class="font-bold text-sm text-deepBerry">Iced Caramel Macchiato</p>
+                    <p class="text-[11px] text-pink-800/70">Vanilla, Espresso & Drizzle</p>
+                  </div>
+                </button>
+                <button type="button" onclick="selectStarbucksDrink('Matcha Crème Frappuccino', '🍵', this)" class="sb-drink-btn text-left p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 hover:border-emerald-400 transition flex items-center gap-2.5 cursor-pointer">
+                  <span class="text-2xl">🍵</span>
+                  <div>
+                    <p class="font-bold text-sm text-deepBerry">Matcha Frappuccino</p>
+                    <p class="text-[11px] text-pink-800/70">Creamy Sweet Green Tea</p>
+                  </div>
+                </button>
+                <button type="button" onclick="selectStarbucksDrink('Iced White Chocolate Mocha', '🤍', this)" class="sb-drink-btn text-left p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 hover:border-emerald-400 transition flex items-center gap-2.5 cursor-pointer">
+                  <span class="text-2xl">🤍</span>
+                  <div>
+                    <p class="font-bold text-sm text-deepBerry">Iced White Mocha</p>
+                    <p class="text-[11px] text-pink-800/70">Sweet White Chocolate & Whip</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Size Selector -->
+            <div class="mb-5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-pink-900/80 mb-2">2. Pick Royal Cup Size</label>
+              <div class="grid grid-cols-3 gap-2.5" id="starbucksSizes">
+                <button type="button" onclick="selectStarbucksSize('Tall', this)" class="sb-size-btn py-2.5 px-3 rounded-xl border-2 border-pink-200 bg-white/80 text-xs font-bold text-deepBerry hover:border-emerald-500 transition cursor-pointer">
+                  Tall (12 oz)
+                </button>
+                <button type="button" onclick="selectStarbucksSize('Grande', this)" class="sb-size-btn py-2.5 px-3 rounded-xl border-2 border-emerald-600 bg-emerald-50 text-xs font-bold text-emerald-900 transition cursor-pointer">
+                  Grande (16 oz) ✨
+                </button>
+                <button type="button" onclick="selectStarbucksSize('Venti', this)" class="sb-size-btn py-2.5 px-3 rounded-xl border-2 border-pink-200 bg-white/80 text-xs font-bold text-deepBerry hover:border-emerald-500 transition cursor-pointer">
+                  Venti (24 oz) 👑
+                </button>
+              </div>
+            </div>
+
+            <!-- Sweet Extras Toggle -->
+            <div class="mb-6">
+              <label class="block text-xs font-bold uppercase tracking-wider text-pink-900/80 mb-2">3. Royal Sweet Add-Ons (Pick Multiple!)</label>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="toggleStarbucksExtra('Vanilla Sweet Cream Cold Foam', this)" class="sb-extra-btn active-extra px-3.5 py-2 rounded-full text-xs font-semibold border-2 border-emerald-600 bg-emerald-600 text-white transition cursor-pointer">
+                  ☁️ Vanilla Cold Foam
+                </button>
+                <button type="button" onclick="toggleStarbucksExtra('Extra Caramel Drizzle', this)" class="sb-extra-btn px-3.5 py-2 rounded-full text-xs font-semibold border-2 border-pink-200 bg-white/80 text-deepBerry hover:border-emerald-400 transition cursor-pointer">
+                  🍯 Extra Caramel Drizzle
+                </button>
+                <button type="button" onclick="toggleStarbucksExtra('Birthday Cake Pop', this)" class="sb-extra-btn active-extra px-3.5 py-2 rounded-full text-xs font-semibold border-2 border-emerald-600 bg-emerald-600 text-white transition cursor-pointer">
+                  🍭 Birthday Cake Pop
+                </button>
+                <button type="button" onclick="toggleStarbucksExtra('Warm Chocolate Croissant', this)" class="sb-extra-btn px-3.5 py-2 rounded-full text-xs font-semibold border-2 border-pink-200 bg-white/80 text-deepBerry hover:border-emerald-400 transition cursor-pointer">
+                  🥐 Chocolate Croissant
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Starbucks Cup Preview Bar -->
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-900 to-emerald-700 text-white flex items-center justify-between gap-3 shadow-inner">
+            <div>
+              <p class="text-[11px] uppercase tracking-wider text-emerald-200 font-semibold">Custom Barista Order Ready:</p>
+              <p id="sbSummaryPreview" class="font-serif font-bold text-sm sm:text-base">Grande Pink Drink Refresher + Vanilla Cold Foam, Birthday Cake Pop</p>
+            </div>
+            <span class="text-2xl shrink-0">🥤</span>
+          </div>
+        </div>
+
+        <!-- 2. MINISO ROYAL SHOPPING SPREE -->
+        <div id="miniso-section" class="glass-royal rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-rose-500/25 relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-rose-500/10 pointer-events-none"></div>
+
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-minisoRed text-white flex items-center justify-center text-2xl shadow-md">
+                  🛍️
+                </div>
+                <div>
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 px-2.5 py-0.5 rounded-full">Unlimited Cute Haul</span>
+                  <h3 class="font-serif text-2xl font-bold text-deepBerry mt-0.5">Miniso Shopping Spree</h3>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="inline-block text-xs font-bold text-amber-800 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full">
+                  Budget: ∞ Unlimited 💳
+                </span>
+              </div>
+            </div>
+
+            <p class="text-xs sm:text-sm text-pink-900/80 mb-4">
+              Tap any cute Miniso treasures below to toss them straight into your royal shopping basket!
+            </p>
+
+            <!-- Miniso Interactive Shelf Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6" id="minisoGrid">
+              <!-- Items rendered/managed interactively -->
+              <button type="button" onclick="toggleMinisoItem('Sanrio Hello Kitty / Kuromi Plushie', '🧸', this)" class="miniso-card selected-miniso p-3 rounded-2xl border-2 border-rose-500 bg-rose-50/90 text-center transition hover:scale-[1.02] cursor-pointer relative">
+                <span class="badge-check absolute top-2 right-2 text-xs bg-rose-500 text-white w-5 h-5 rounded-full flex items-center justify-center">✓</span>
+                <div class="text-3xl mb-1.5">🧸</div>
+                <p class="font-bold text-xs text-deepBerry leading-snug">Sanrio Plushie</p>
+                <p class="text-[10px] text-rose-600 font-semibold mt-0.5">₹0 (Royal Tab)</p>
+              </button>
+
+              <button type="button" onclick="toggleMinisoItem('Mystery Blind Box Figure', '🎁', this)" class="miniso-card selected-miniso p-3 rounded-2xl border-2 border-rose-500 bg-rose-50/90 text-center transition hover:scale-[1.02] cursor-pointer relative">
+                <span class="badge-check absolute top-2 right-2 text-xs bg-rose-500 text-white w-5 h-5 rounded-full flex items-center justify-center">✓</span>
+                <div class="text-3xl mb-1.5">🎁</div>
+                <p class="font-bold text-xs text-deepBerry leading-snug">Blind Box Toy</p>
+                <p class="text-[10px] text-rose-600 font-semibold mt-0.5">₹0 (Royal Tab)</p>
+              </button>
+
+              <button type="button" onclick="toggleMinisoItem('Pastel Crystal Eau de Parfum', '🌸', this)" class="miniso-card p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 text-center transition hover:scale-[1.02] hover:border-rose-300 cursor-pointer relative">
+                <span class="badge-check hidden absolute top-2 right-2 text-xs bg-rose-500 text-white w-5 h-5 rounded-full items-center justify-center">✓</span>
+                <div class="text-3xl mb-1.5">🌸</div>
+                <p class="font-bold text-xs text-deepBerry leading-snug">Pastel Perfume</p>
+                <p class="text-[10px] text-pink-700/70 font-semibold mt-0.5">Tap to Add</p>
+              </button>
+
+              <button type="button" onclick="toggleMinisoItem('Aesthetic Pastel Straw Tumbler', '🧋', this)" class="miniso-card p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 text-center transition hover:scale-[1.02] hover:border-rose-300 cursor-pointer relative">
+                <span class="badge-check hidden absolute top-2 right-2 text-xs bg-rose-500 text-white w-5 h-5 rounded-full items-center justify-center">✓</span>
+                <div class="text-3xl mb-1.5">🧋</div>
+                <p class="font-bold text-xs text-deepBerry leading-snug">Cute Tumbler</p>
+                <p class="text-[10px] text-pink-700/70 font-semibold mt-0.5">Tap to Add</p>
+              </button>
+
+              <button type="button" onclick="toggleMinisoItem('Cloud-Soft Bunny Fluffy Slippers', '🐰', this)" class="miniso-card p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 text-center transition hover:scale-[1.02] hover:border-rose-300 cursor-pointer relative">
+                <span class="badge-check hidden absolute top-2 right-2 text-xs bg-rose-500 text-white w-5 h-5 rounded-full items-center justify-center">✓</span>
+                <div class="text-3xl mb-1.5">🐰</div>
+                <p class="font-bold text-xs text-deepBerry leading-snug">Fluffy Slippers</p>
+                <p class="text-[10px] text-pink-700/70 font-semibold mt-0.5">Tap to Add</p>
+              </button>
+
+              <button type="button" onclick="toggleMinisoItem('Plush Bow Skincare Headband', '🎀', this)" class="miniso-card p-3 rounded-2xl border-2 border-pink-200/80 bg-white/80 text-center transition hover:scale-[1.02] hover:border-rose-300 cursor-pointer relative">
+                <span class="badge-check hidden absolute top-2 right-2 text-xs bg-rose-500 text-white w-5 h-5 rounded-full items-center justify-center">✓</span>
+                <div class="text-3xl mb-1.5">🎀</div>
+                <p class="font-bold text-xs text-deepBerry leading-snug">Spa Headband</p>
+                <p class="text-[10px] text-pink-700/70 font-semibold mt-0.5">Tap to Add</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Miniso Basket Counter Bar -->
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-500 text-white flex items-center justify-between gap-3 shadow-inner">
+            <div>
+              <p class="text-[11px] uppercase tracking-wider text-rose-100 font-semibold">
+                Royal Haul Basket (<span id="minisoCount">2</span> Items Selected)
+              </p>
+              <p id="minisoSummaryPreview" class="font-serif font-bold text-xs sm:text-sm truncate max-w-[230px] sm:max-w-xs">
+                Sanrio Plushie, Mystery Blind Box Figure
+              </p>
+            </div>
+            <button type="button" onclick="addAllMiniso()" class="px-3 py-1.5 rounded-xl bg-white text-rose-600 font-bold text-xs shadow hover:bg-rose-50 transition shrink-0 cursor-pointer">
+              + Grab All!
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDITIONAL ROYAL PAMPERING TREATS -->
+      <div class="glass-royal rounded-3xl p-6 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-purple-700">Bonus Royal Activities</span>
+            <h3 class="font-serif text-2xl font-bold text-deepBerry">Extra Pampering & Date Add-Ons</h3>
+          </div>
+          <span class="text-xs font-semibold text-pink-800 bg-pink-100 px-3 py-1 rounded-full">Tap to toggle into your itinerary</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <button type="button" onclick="togglePamperTreat('Spa & Nail Glam Session', '💅', this)" class="pamper-card active-pamper text-left p-4 rounded-2xl border-2 border-royalGold bg-amber-50/75 transition hover:-translate-y-1 cursor-pointer">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-3xl">💅</span>
+              <span class="pamper-status text-[11px] font-bold px-2 py-0.5 rounded-full bg-royalGold text-white">Included ✓</span>
+            </div>
+            <h4 class="font-bold text-sm text-deepBerry">Spa & Nail Glam</h4>
+            <p class="text-xs text-pink-900/75 mt-1">Fresh pastel manicure, face masks & full relaxation mode.</p>
+          </button>
+
+          <button type="button" onclick="togglePamperTreat('Gourmet Macarons & Dessert Box', '🧁', this)" class="pamper-card active-pamper text-left p-4 rounded-2xl border-2 border-royalGold bg-amber-50/75 transition hover:-translate-y-1 cursor-pointer">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-3xl">🧁</span>
+              <span class="pamper-status text-[11px] font-bold px-2 py-0.5 rounded-full bg-royalGold text-white">Included ✓</span>
+            </div>
+            <h4 class="font-bold text-sm text-deepBerry">Macarons & Sweets</h4>
+            <p class="text-xs text-pink-900/75 mt-1">Artisanal French macarons, strawberries & chocolate treats.</p>
+          </button>
+
+          <button type="button" onclick="togglePamperTreat('Golden Hour Sunset Drive + Playlist', '🌅', this)" class="pamper-card text-left p-4 rounded-2xl border-2 border-pink-200 bg-white/80 transition hover:-translate-y-1 cursor-pointer">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-3xl">🌅</span>
+              <span class="pamper-status text-[11px] font-bold px-2 py-0.5 rounded-full bg-pink-100 text-pink-800">+ Add</span>
+            </div>
+            <h4 class="font-bold text-sm text-deepBerry">Sunset Drive & Aux</h4>
+            <p class="text-xs text-pink-900/75 mt-1">Windows down, golden hour sky & 100% her favorite songs.</p>
+          </button>
+
+          <button type="button" onclick="togglePamperTreat('Cozy Princess Movie Marathon', '🎬', this)" class="pamper-card text-left p-4 rounded-2xl border-2 border-pink-200 bg-white/80 transition hover:-translate-y-1 cursor-pointer">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-3xl">🎬</span>
+              <span class="pamper-status text-[11px] font-bold px-2 py-0.5 rounded-full bg-pink-100 text-pink-800">+ Add</span>
+            </div>
+            <h4 class="font-bold text-sm text-deepBerry">Cozy Movie Marathon</h4>
+            <p class="text-xs text-pink-900/75 mt-1">Blanket fort, fairy lights, snacks & zero interruptions.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SPIN THE ROYAL TREAT WHEEL & ROYAL COMPLIMENT CARDS -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- Spin the Royal Treat Wheel (7 cols) -->
+      <div id="wheel-section" class="lg:col-span-7 glass-royal rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-between text-center">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-600">Step 2 • Royal Wheel of Fortune</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepBerry mt-1">Spin for an Instant Royal Perk!</h2>
+          <p class="text-xs sm:text-sm text-pink-900/75 mt-1">
+            Whatever the golden pointer lands on is legally binding under Royal Law.
+          </p>
+        </div>
+
+        <!-- Wheel Container -->
+        <div class="relative my-6 flex items-center justify-center">
+          <!-- Top Golden Pointer -->
+          <div class="absolute -top-4 z-20 drop-shadow-md">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <path d="M18 34L4 6H32L18 34Z" fill="#D4AF37" stroke="#6B214A" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="p-2 rounded-full bg-gradient-to-tr from-amber-400 via-pink-300 to-amber-500 shadow-xl">
+            <canvas id="royalWheelCanvas" width="300" height="300" class="rounded-full bg-white block max-w-[270px] sm:max-w-[300px] h-auto"></canvas>
+          </div>
+
+          <!-- Center Spin Hub Button -->
+          <button
+            id="spinWheelBtn"
+            onclick="spinRoyalWheel()"
+            class="absolute z-20 w-16 h-16 rounded-full bg-gradient-to-br from-deepBerry to-pink-600 text-white font-royal font-bold text-xs tracking-wider border-4 border-royalGold shadow-lg hover:scale-110 active:scale-95 transition cursor-pointer flex items-center justify-center"
+          >
+            SPIN
+          </button>
+        </div>
+
+        <!-- Won Perk Display -->
+        <div class="w-full p-4 rounded-2xl bg-white/90 border border-royalGold/50 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div class="text-left">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-amber-700">Unlocked Royal Bonus:</span>
+            <p id="wheelResultText" class="font-serif font-bold text-base text-deepBerry">Tap SPIN to reveal your surprise perk! ✨</p>
+          </div>
+          <button type="button" onclick="spinRoyalWheel()" class="px-4 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs transition cursor-pointer shrink-0">
+            Spin Again 🎡
+          </button>
+        </div>
+      </div>
+
+      <!-- Royal Compliment & Love Note Deck (5 cols) -->
+      <div class="lg:col-span-5 glass-royal rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-pink-600">Step 3 • Royal Scrolls</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-deepBerry mt-1">Reasons You're Royalty</h2>
+          <p class="text-xs sm:text-sm text-pink-900/75 mt-1">
+            Tap the card to flip and read a decree from the Royal Court.
+          </p>
+        </div>
+
+        <!-- Flippable Card -->
+        <div id="complimentCardContainer" onclick="flipComplimentCard()" class="perspective-1000 my-6 h-64 w-full cursor-pointer select-none">
+          <div class="flip-inner relative w-full h-full">
+            <!-- Front -->
+            <div class="flip-front absolute inset-0 rounded-3xl bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 text-white p-6 flex flex-col items-center justify-center text-center shadow-lg border-2 border-royalGold">
+              <span class="text-4xl mb-3 animate-float-slow">💌</span>
+              <p class="font-royal text-sm tracking-widest uppercase text-amber-200 mb-1">Royal Decree #<span id="scrollNumberFront">1</span></p>
+              <h3 class="font-serif text-xl font-bold">Tap to Unseal Your Note</h3>
+              <p class="text-xs text-pink-100 mt-3 opacity-90">(Click card to reveal)</p>
+            </div>
+
+            <!-- Back -->
+            <div class="flip-back absolute inset-0 rounded-3xl bg-white p-6 flex flex-col items-center justify-center text-center shadow-lg border-2 border-royalGold">
+              <span id="complimentEmoji" class="text-4xl mb-3">👑</span>
+              <p id="complimentQuote" class="font-serif italic text-base sm:text-lg text-deepBerry leading-relaxed">
+                "Even without a crown, your smile lights up every single room you walk into."
+              </p>
+              <span class="mt-4 text-[11px] font-bold uppercase tracking-widest text-amber-600">— Signed, Your Royal Admirer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-3">
+          <button type="button" onclick="prevCompliment()" class="px-4 py-2.5 rounded-xl bg-white border border-pink-200 text-deepBerry font-bold text-xs hover:bg-pink-50 transition cursor-pointer">
+            ← Previous
+          </button>
+          <span class="text-xs font-bold text-pink-800/70"><span id="scrollCounter">1</span> / 5</span>
+          <button type="button" onclick="nextCompliment()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-xs shadow hover:opacity-95 transition cursor-pointer">
+            Next Decree →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: OFFICIAL ROYAL PRINCESS DAY VIP PASS / VOUCHER -->
+    <section id="vip-pass-section" class="pt-4">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-6">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Step 4 • Your Official Golden Ticket</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-deepBerry mt-1">Royal Princess Day VIP Pass</h2>
+          <p class="text-sm text-pink-900/75 mt-1">All your Starbucks, Miniso, and Pampering choices compiled into one official royal voucher.</p>
+        </div>
+
+        <!-- Golden VIP Ticket Card -->
+        <div class="relative rounded-3xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF5F9] to-[#FDF2E9] border-2 border-royalGold shadow-2xl p-6 sm:p-10 overflow-hidden">
+          <!-- Decorative Cutouts -->
+          <div class="ticket-cutout-left hidden sm:block"></div>
+          <div class="ticket-cutout-right hidden sm:block"></div>
+
+          <!-- Top Ticket Header -->
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b-2 border-dashed border-royalGold/50">
+            <div class="flex items-center gap-3.5">
+              <!-- Mini upright portrait avatar inside ticket -->
+              <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-royalGold relative shrink-0 bg-pink-100">
+                <img
+                  id="ticketPrincessAvatar"
+                  src="395052_2.jpg"
+                  alt="Princess Avatar"
+                  class="w-full h-full max-w-none object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-90 scale-[1.38]"
+                  onerror="handlePortraitFallback(this, true)"
+                />
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full">All-Access Royal Pass • #001</span>
+                <h3 class="font-royal text-lg sm:text-2xl font-black text-deepBerry mt-0.5">PRINCESS DAY VIP VOUCHER</h3>
+              </div>
+            </div>
+            <div class="text-left sm:text-right">
+              <p class="text-[11px] font-bold uppercase text-pink-700">Total Amount Due:</p>
+              <p class="font-royal text-xl sm:text-2xl font-black text-emerald-700">₹0.00 (PAID)</p>
+            </div>
+          </div>
+
+          <!-- Ticket Itinerary Details -->
+          <div class="py-6 space-y-4 text-sm">
+            <!-- Starbucks Line -->
+            <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80">
+              <span class="text-xl mt-0.5">☕</span>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-emerald-800">Starbucks Royal Order</p>
+                <p id="ticketStarbucks" class="font-semibold text-deepBerry mt-0.5">Grande Pink Drink Refresher + Vanilla Cold Foam, Birthday Cake Pop</p>
+              </div>
+            </div>
+
+            <!-- Miniso Line -->
+            <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-rose-50/70 border border-rose-200/80">
+              <span class="text-xl mt-0.5">🛍️</span>
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-rose-800">Miniso Shopping Spree Haul</p>
+                <p id="ticketMiniso" class="font-semibold text-deepBerry mt-0.5">Sanrio Hello Kitty / Kuromi Plushie, Mystery Blind Box Figure</p>
+              </div>
+            </div>
+
+            <!-- Pampering & Wheel Perk Line -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-purple-50/70 border border-purple-200/80">
+                <span class="text-xl mt-0.5">✨</span>
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-wider text-purple-800">Pampering Activities</p>
+                  <p id="ticketPamper" class="font-semibold text-deepBerry mt-0.5">Spa & Nail Glam Session, Gourmet Macarons & Dessert Box</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-300/80">
+                <span class="text-xl mt-0.5">🎡</span>
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-wider text-amber-800">Wheel Spin Bonus</p>
+                  <p id="ticketWheelPerk" class="font-semibold text-deepBerry mt-0.5">Spin the wheel above to lock in!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Royal Kiss Seal & Copy Voucher Actions -->
+          <div class="pt-5 border-t-2 border-dashed border-royalGold/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <button
+                id="royalKissBtn"
+                onclick="sealWithRoyalKiss()"
+                class="px-6 py-3.5 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 text-white font-bold text-sm shadow-lg hover:scale-105 active:scale-95 transition flex items-center gap-2 cursor-pointer"
+              >
+                <span class="text-lg">💋</span>
+                <span id="kissBtnLabel">Seal with a Royal Kiss</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="copyItineraryToClipboard()"
+                class="px-4 py-3.5 rounded-full bg-white border-2 border-royalGold/60 text-deepBerry font-bold text-xs sm:text-sm hover:bg-amber-50 transition flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>📋</span>
+                <span>Copy Order</span>
+              </button>
+            </div>
+
+            <!-- Official Kiss Stamp Badge -->
+            <div id="kissStampBadge" class="opacity-40 scale-95 transition-all duration-500 flex items-center gap-2 px-4 py-2 rounded-2xl border-2 border-rose-400 bg-rose-50/90 text-rose-700 rotate-[-3deg]">
+              <span class="text-2xl">💋</span>
+              <div class="leading-tight">
+                <p class="font-royal text-[10px] font-black tracking-widest uppercase">ROYAL SEAL</p>
+                <p id="kissStampStatus" class="text-xs font-bold">Awaiting Princess Kiss</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 text-center py-8 px-4 border-t border-pink-200/60 bg-white/50">
+    <p class="font-serif italic text-sm text-deepBerry">
+      Made with endless love & royal sparkles exclusively for National Princess Day 👑💖
+    </p>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // ==========================================
+    // 0. PORTRAIT FALLBACK, ROTATION & UPLOAD HANDLERS
+    // ==========================================
+    let currentRotationDeg = 90;
+    let isCustomUploaded = false;
+
+    function handlePortraitFallback(imgEl, isMiniAvatar = false) {
+      if (!imgEl.dataset.triedAlt) {
+        imgEl.dataset.triedAlt = 'true';
+        imgEl.src = '395052.jpg';
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.classList.add('upright-custom');
+      imgEl.style.transform = 'translate(-50%, -50%) scale(1)';
+      imgEl.src = isMiniAvatar
+        ? 'https://placehold.co/120x120/FCE7F3/6B214A?text=👑'
+        : 'https://placehold.co/400x500/FCE7F3/6B214A?text=Her+Royal+Highness+👑';
+    }
+
+    function applyPortraitTransform() {
+      const heroImg = document.getElementById('heroPrincessPortrait');
+      const avatarImg = document.getElementById('ticketPrincessAvatar');
+      const isSideways = currentRotationDeg % 180 !== 0;
+      const scaleVal = isSideways ? 1.38 : 1.04;
+
+      if (heroImg) {
+        heroImg.style.transform = `translate(-50%, -50%) rotate(${currentRotationDeg}deg) scale(${scaleVal})`;
+      }
+      if (avatarImg) {
+        avatarImg.style.transform = `translate(-50%, -50%) rotate(${currentRotationDeg}deg) scale(${scaleVal})`;
+      }
+    }
+
+    function togglePortraitRotation() {
+      currentRotationDeg = (currentRotationDeg + 90) % 360;
+      applyPortraitTransform();
+      playRoyalChime('sparkle');
+    }
+
+    function handleCustomPhotoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const dataUrl = e.target.result;
+        const heroImg = document.getElementById('heroPrincessPortrait');
+        const avatarImg = document.getElementById('ticketPrincessAvatar');
+        isCustomUploaded = true;
+        currentRotationDeg = 0;
+
+        if (heroImg) {
+          heroImg.src = dataUrl;
+          heroImg.classList.add('upright-custom');
+        }
+        if (avatarImg) {
+          avatarImg.src = dataUrl;
+        }
+        applyPortraitTransform();
+        playRoyalChime('fanfare');
+        triggerConfettiBurst(window.innerWidth / 2, window.innerHeight * 0.35);
+        showRoyalToast('📸', 'Royal Portrait Updated!', 'Looking radiant, Your Highness!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // ==========================================
+    // 1. STATE MANAGEMENT FOR ROYAL ITINERARY
+    // ==========================================
+    const royalState = {
+      drink: 'Pink Drink Refresher',
+      size: 'Grande',
+      extras: ['Vanilla Sweet Cream Cold Foam', 'Birthday Cake Pop'],
+      minisoItems: ['Sanrio Hello Kitty / Kuromi Plushie', 'Mystery Blind Box Figure'],
+      pamperItems: ['Spa & Nail Glam Session', 'Gourmet Macarons & Dessert Box'],
+      wheelPerk: 'Spin the wheel above to lock in!',
+      kissSealed: false,
+      crownClaimed: false
+    };
+
+    // ==========================================
+    // 2. WEB AUDIO API ROYAL CHIME SYNTHESIZER
+    // ==========================================
+    function playRoyalChime(type = 'fanfare') {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+
+        const playNote = (freq, startTime, duration, vol = 0.12) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, startTime);
+
+          gain.gain.setValueAtTime(0.001, startTime);
+          gain.gain.exponentialRampToValueAtTime(vol, startTime + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(startTime);
+          osc.stop(startTime + duration);
+        };
+
+        const now = ctx.currentTime;
+        if (type === 'fanfare') {
+          // Royal harp arpeggio C5 - E5 - G5 - B5 - C6 - E6
+          const notes = [523.25, 659.25, 783.99, 987.77, 1046.50, 1318.51];
+          notes.forEach((freq, i) => playNote(freq, now + i * 0.09, 0.75, 0.14));
+        } else if (type === 'sparkle') {
+          playNote(880, now, 0.35, 0.09);
+          playNote(1318.51, now + 0.08, 0.45, 0.09);
+        } else if (type === 'win') {
+          const winNotes = [587.33, 739.99, 880, 1174.66];
+          winNotes.forEach((freq, i) => playNote(freq, now + i * 0.1, 0.65, 0.14));
+        }
+      } catch (e) {
+        // Ignore audio restrictions if blocked
+      }
+    }
+
+    // ==========================================
+    // 3. FLOATING SPARKLES & CONFETTI CANVAS
+    // ==========================================
+    const canvas = document.getElementById('sparkleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let bursts = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const ambientIcons = ['✨', '🌸', '💖', '👑', '💫'];
+    for (let i = 0; i < 28; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: 10 + Math.random() * 12,
+        speedY: 0.35 + Math.random() * 0.65,
+        speedX: (Math.random() - 0.5) * 0.4,
+        icon: ambientIcons[Math.floor(Math.random() * ambientIcons.length)],
+        opacity: 0.35 + Math.random() * 0.45
+      });
+    }
+
+    function triggerConfettiBurst(originX = canvas.width / 2, originY = canvas.height / 3) {
+      const burstIcons = ['👑', '💖', '✨', '🌸', '🥂', '💎', '🎀'];
+      for (let i = 0; i < 45; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 3 + Math.random() * 8;
+        bursts.push({
+          x: originX,
+          y: originY,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity - 3,
+          gravity: 0.18,
+          size: 14 + Math.random() * 14,
+          icon: burstIcons[Math.floor(Math.random() * burstIcons.length)],
+          life: 1.0
+        });
+      }
+    }
+
+    function animateSparkles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Ambient gentle floating elements
+      particles.forEach(p => {
+        p.y -= p.speedY;
+        p.x += p.speedX;
+        if (p.y < -30) {
+          p.y = canvas.height + 20;
+          p.x = Math.random() * canvas.width;
+        }
+        ctx.globalAlpha = p.opacity;
+        ctx.font = `${p.size}px serif`;
+        ctx.fillText(p.icon, p.x, p.y);
+      });
+
+      // Celebratory confetti bursts
+      for (let i = bursts.length - 1; i >= 0; i--) {
+        const b = bursts[i];
+        b.x += b.vx;
+        b.y += b.vy;
+        b.vy += b.gravity;
+        b.life -= 0.014;
+
+        if (b.life <= 0) {
+          bursts.splice(i, 1);
+          continue;
+        }
+        ctx.globalAlpha = Math.max(0, b.life);
+        ctx.font = `${b.size}px serif`;
+        ctx.fillText(b.icon, b.x, b.y);
+      }
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(animateSparkles);
+    }
+
+    // ==========================================
+    // 4. TOAST FEEDBACK HELPER
+    // ==========================================
+    let toastTimeout;
+    function showRoyalToast(emoji, title, message) {
+      const toast = document.getElementById('royalToast');
+      document.getElementById('toastEmoji').textContent = emoji;
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMessage').textContent = message;
+
+      toast.classList.remove('translate-x-[150%]');
+      toast.classList.add('translate-x-0');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-x-0');
+        toast.classList.add('translate-x-[150%]');
+      }, 2800);
+    }
+
+    // ==========================================
+    // 5. CLAIM CROWN INTERACTION
+    // ==========================================
+    function claimRoyalCrown() {
+      royalState.crownClaimed = true;
+      playRoyalChime('fanfare');
+      triggerConfettiBurst(window.innerWidth / 2, window.innerHeight * 0.35);
+
+      const btnText = document.getElementById('claimCrownText');
+      const statusNote = document.getElementById('crownStatusNote');
+      btnText.textContent = 'Crown Claimed! Long Live The Princess 👑';
+      statusNote.textContent = '✨ Royal Status Verified! Customize your Starbucks & Miniso treats below ✨';
+      showRoyalToast('👑', 'All Hail Her Royal Highness!', 'Your crown has been officially claimed.');
+    }
+
+    // ==========================================
+    // 6. STARBUCKS CUSTOMIZER LOGIC
+    // ==========================================
+    function selectStarbucksDrink(drinkName, icon, btnEl) {
+      royalState.drink = drinkName;
+      playRoyalChime('sparkle');
+
+      document.querySelectorAll('.sb-drink-btn').forEach(btn => {
+        btn.classList.remove('border-emerald-600', 'bg-emerald-50/90');
+        btn.classList.add('border-pink-200/80', 'bg-white/80');
+      });
+      btnEl.classList.remove('border-pink-200/80', 'bg-white/80');
+      btnEl.classList.add('border-emerald-600', 'bg-emerald-50/90');
+
+      updateVoucherUI();
+      showRoyalToast('☕', 'Starbucks Drink Updated', `${royalState.size} ${drinkName} selected!`);
+    }
+
+    function selectStarbucksSize(sizeName, btnEl) {
+      royalState.size = sizeName;
+      playRoyalChime('sparkle');
+
+      document.querySelectorAll('.sb-size-btn').forEach(btn => {
+        btn.classList.remove('border-emerald-600', 'bg-emerald-50', 'text-emerald-900');
+        btn.classList.add('border-pink-200', 'bg-white/80', 'text-deepBerry');
+      });
+      btnEl.classList.remove('border-pink-200', 'bg-white/80', 'text-deepBerry');
+      btnEl.classList.add('border-emerald-600', 'bg-emerald-50', 'text-emerald-900');
+
+      updateVoucherUI();
+    }
+
+    function toggleStarbucksExtra(extraName, btnEl) {
+      playRoyalChime('sparkle');
+      const idx = royalState.extras.indexOf(extraName);
+      if (idx > -1) {
+        royalState.extras.splice(idx, 1);
+        btnEl.classList.remove('border-emerald-600', 'bg-emerald-600', 'text-white');
+        btnEl.classList.add('border-pink-200', 'bg-white/80', 'text-deepBerry');
+      } else {
+        royalState.extras.push(extraName);
+        btnEl.classList.remove('border-pink-200', 'bg-white/80', 'text-deepBerry');
+        btnEl.classList.add('border-emerald-600', 'bg-emerald-600', 'text-white');
+      }
+      updateVoucherUI();
+    }
+
+    // ==========================================
+    // 7. MINISO HAUL BASKET LOGIC
+    // ==========================================
+    function toggleMinisoItem(itemName, emoji, cardEl) {
+      playRoyalChime('sparkle');
+      const idx = royalState.minisoItems.indexOf(itemName);
+      const badge = cardEl.querySelector('.badge-check');
+
+      if (idx > -1) {
+        royalState.minisoItems.splice(idx, 1);
+        cardEl.classList.remove('border-rose-500', 'bg-rose-50/90');
+        cardEl.classList.add('border-pink-200/80', 'bg-white/80');
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+      } else {
+        royalState.minisoItems.push(itemName);
+        cardEl.classList.remove('border-pink-200/80', 'bg-white/80');
+        cardEl.classList.add('border-rose-500', 'bg-rose-50/90');
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+        showRoyalToast(emoji, 'Added to Miniso Basket!', `${itemName} added on the Royal Tab.`);
+      }
+      updateVoucherUI();
+    }
+
+    function addAllMiniso() {
+      playRoyalChime('win');
+      triggerConfettiBurst(window.innerWidth * 0.7, window.innerHeight * 0.5);
+      const allItems = [
+        'Sanrio Hello Kitty / Kuromi Plushie',
+        'Mystery Blind Box Figure',
+        'Pastel Crystal Eau de Parfum',
+        'Aesthetic Pastel Straw Tumbler',
+        'Cloud-Soft Bunny Fluffy Slippers',
+        'Plush Bow Skincare Headband'
+      ];
+      royalState.minisoItems = [...allItems];
+
+      document.querySelectorAll('.miniso-card').forEach(card => {
+        card.classList.remove('border-pink-200/80', 'bg-white/80');
+        card.classList.add('border-rose-500', 'bg-rose-50/90');
+        const badge = card.querySelector('.badge-check');
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+      });
+
+      updateVoucherUI();
+      showRoyalToast('🛍️', 'Full Miniso Haul Unlocked!', 'Every cute item is now in your royal basket!');
+    }
+
+    // ==========================================
+    // 8. ADDITIONAL PAMPERING TREATS LOGIC
+    // ==========================================
+    function togglePamperTreat(treatName, emoji, cardEl) {
+      playRoyalChime('sparkle');
+      const idx = royalState.pamperItems.indexOf(treatName);
+      const statusBadge = cardEl.querySelector('.pamper-status');
+
+      if (idx > -1) {
+        royalState.pamperItems.splice(idx, 1);
+        cardEl.classList.remove('border-royalGold', 'bg-amber-50/75');
+        cardEl.classList.add('border-pink-200', 'bg-white/80');
+        statusBadge.textContent = '+ Add';
+        statusBadge.classList.remove('bg-royalGold', 'text-white');
+        statusBadge.classList.add('bg-pink-100', 'text-pink-800');
+      } else {
+        royalState.pamperItems.push(treatName);
+        cardEl.classList.remove('border-pink-200', 'bg-white/80');
+        cardEl.classList.add('border-royalGold', 'bg-amber-50/75');
+        statusBadge.textContent = 'Included ✓';
+        statusBadge.classList.remove('bg-pink-100', 'text-pink-800');
+        statusBadge.classList.add('bg-royalGold', 'text-white');
+        showRoyalToast(emoji, 'Royal Treat Added!', `${treatName} added to your itinerary.`);
+      }
+      updateVoucherUI();
+    }
+
+    // ==========================================
+    // 9. SPIN THE ROYAL TREAT WHEEL
+    // ==========================================
+    const wheelPrizes = [
+      { label: 'Extra SB Pastry 🥐', full: 'Extra Starbucks Pastry of Choice 🥐', color: '#FCE7F3' },
+      { label: '2 Miniso Boxes 🎁', full: '2 Extra Miniso Mystery Blind Boxes 🎁', color: '#FDE68A' },
+      { label: 'Unlimited Foot Rubs 💆‍♀️', full: 'Unlimited Royal Foot & Shoulder Rubs 💆‍♀️', color: '#E9D5FF' },
+      { label: 'Surprise Bouquet 💐', full: 'Fresh Surprise Flower Bouquet 💐', color: '#FECDD3' },
+      { label: 'Breakfast in Bed 🥞', full: 'Royal Breakfast in Bed Tomorrow 🥞', color: '#FBCFE8' },
+      { label: 'Zero Chores Week 👑', full: 'Zero Chores & Full Royalty Treatment All Week 👑', color: '#FEF08A' }
+    ];
+
+    let currentWheelRotation = 0;
+    let isSpinning = false;
+
+    function drawRoyalWheel() {
+      const wheelCanvas = document.getElementById('royalWheelCanvas');
+      if (!wheelCanvas) return;
+      const wCtx = wheelCanvas.getContext('2d');
+      const cx = wheelCanvas.width / 2;
+      const cy = wheelCanvas.height / 2;
+      const radius = cx - 4;
+      const arc = (2 * Math.PI) / wheelPrizes.length;
+
+      wCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+
+      wheelPrizes.forEach((prize, i) => {
+        const startAngle = i * arc - Math.PI / 2;
+        const endAngle = startAngle + arc;
+
+        // Slice background
+        wCtx.beginPath();
+        wCtx.moveTo(cx, cy);
+        wCtx.arc(cx, cy, radius, startAngle, endAngle);
+        wCtx.closePath();
+        wCtx.fillStyle = prize.color;
+        wCtx.fill();
+        wCtx.lineWidth = 2;
+        wCtx.strokeStyle = '#D4AF37';
+        wCtx.stroke();
+
+        // Slice text
+        wCtx.save();
+        wCtx.translate(cx, cy);
+        wCtx.rotate(startAngle + arc / 2);
+        wCtx.textAlign = 'right';
+        wCtx.fillStyle = '#6B214A';
+        wCtx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
+        wCtx.fillText(prize.label, radius - 14, 4);
+        wCtx.restore();
+      });
+    }
+
+    function spinRoyalWheel() {
+      if (isSpinning) return;
+      isSpinning = true;
+      playRoyalChime('sparkle');
+
+      const wheelCanvas = document.getElementById('royalWheelCanvas');
+      const extraSpins = 5 + Math.floor(Math.random() * 4);
+      const randomDeg = Math.floor(Math.random() * 360);
+      currentWheelRotation += extraSpins * 360 + randomDeg;
+
+      wheelCanvas.style.transform = `rotate(${currentWheelRotation}deg)`;
+
+      setTimeout(() => {
+        isSpinning = false;
+        const normalizedDeg = (360 - (currentWheelRotation % 360)) % 360;
+        const sliceAngle = 360 / wheelPrizes.length;
+        const wonIndex = Math.floor(normalizedDeg / sliceAngle) % wheelPrizes.length;
+        const wonPrize = wheelPrizes[wonIndex];
+
+        royalState.wheelPerk = wonPrize.full;
+        document.getElementById('wheelResultText').textContent = wonPrize.full;
+        updateVoucherUI();
+
+        playRoyalChime('win');
+        triggerConfettiBurst(window.innerWidth * 0.35, window.innerHeight * 0.55);
+        showRoyalToast('🎡', 'Royal Wheel Winner!', `You unlocked: ${wonPrize.full}`);
+      }, 4550);
+    }
+
+    // ==========================================
+    // 10. ROYAL COMPLIMENT DECK LOGIC
+    // ==========================================
+    const royalCompliments = [
+      { emoji: '👑', text: '"Even without a crown, your smile lights up every single room you walk into."' },
+      { emoji: '✨', text: '"You deserve every Starbucks drink, every cute Miniso plushie, and all the happiness in the world."' },
+      { emoji: '🌸', text: '"Graceful, radiant, and effortlessly iconic—today and every day belongs to you, Princess."' },
+      { emoji: '💖', text: '"Your kindness and warmth make life feel like a real-life fairytale."' },
+      { emoji: '🥂', text: '"Official Royal Decree: You are never allowed to settle for anything less than pure princess treatment."' }
+    ];
+    let complimentIdx = 0;
+
+    function renderCompliment() {
+      const item = royalCompliments[complimentIdx];
+      document.getElementById('scrollNumberFront').textContent = complimentIdx + 1;
+      document.getElementById('scrollCounter').textContent = complimentIdx + 1;
+      document.getElementById('complimentEmoji').textContent = item.emoji;
+      document.getElementById('complimentQuote').textContent = item.text;
+    }
+
+    function flipComplimentCard() {
+      playRoyalChime('sparkle');
+      document.getElementById('complimentCardContainer').classList.toggle('flipped');
+    }
+
+    function nextCompliment() {
+      const container = document.getElementById('complimentCardContainer');
+      container.classList.add('flipped');
+      complimentIdx = (complimentIdx + 1) % royalCompliments.length;
+      renderCompliment();
+      playRoyalChime('sparkle');
+    }
+
+    function prevCompliment() {
+      const container = document.getElementById('complimentCardContainer');
+      container.classList.add('flipped');
+      complimentIdx = (complimentIdx - 1 + royalCompliments.length) % royalCompliments.length;
+      renderCompliment();
+      playRoyalChime('sparkle');
+    }
+
+    // ==========================================
+    // 11. LIVE VIP TICKET SYNCHRONIZATION & ROYAL KISS
+    // ==========================================
+    function updateVoucherUI() {
+      const extrasStr = royalState.extras.length > 0 ? ` + ${royalState.extras.join(', ')}` : '';
+      const sbFullOrder = `${royalState.size} ${royalState.drink}${extrasStr}`;
+      document.getElementById('sbSummaryPreview').textContent = sbFullOrder;
+      document.getElementById('ticketStarbucks').textContent = sbFullOrder;
+
+      const minisoCount = royalState.minisoItems.length;
+      const minisoStr = minisoCount > 0 ? royalState.minisoItems.join(', ') : 'Dealer’s Choice Miniso Surprise';
+      document.getElementById('minisoCount').textContent = minisoCount;
+      document.getElementById('minisoSummaryPreview').textContent = minisoStr;
+      document.getElementById('ticketMiniso').textContent = minisoStr;
+
+      const pamperStr = royalState.pamperItems.length > 0 ? royalState.pamperItems.join(', ') : 'Full Relaxation & Princess Vibes';
+      document.getElementById('ticketPamper').textContent = pamperStr;
+      document.getElementById('ticketWheelPerk').textContent = royalState.wheelPerk;
+    }
+
+    function sealWithRoyalKiss() {
+      royalState.kissSealed = true;
+      playRoyalChime('fanfare');
+      triggerConfettiBurst(window.innerWidth / 2, window.innerHeight * 0.7);
+
+      const stampBadge = document.getElementById('kissStampBadge');
+      const stampStatus = document.getElementById('kissStampStatus');
+      const btnLabel = document.getElementById('kissBtnLabel');
+
+      stampBadge.classList.remove('opacity-40', 'scale-95');
+      stampBadge.classList.add('opacity-100', 'scale-105', 'shadow-md');
+      stampStatus.textContent = 'Sealed & Approved 💋';
+      btnLabel.textContent = 'Sealed with a Royal Kiss!';
+
+      showRoyalToast('💋', 'Sealed with a Royal Kiss!', 'Your Princess Day VIP Voucher is officially locked in!');
+    }
+
+    function copyItineraryToClipboard() {
+      const summaryText =
+`👑 HAPPY NATIONAL PRINCESS DAY VIP VOUCHER 👑
+☕ Starbucks Order: ${document.getElementById('ticketStarbucks').textContent}
+🛍️ Miniso Haul: ${document.getElementById('ticketMiniso').textContent}
+✨ Pampering Plan: ${document.getElementById('ticketPamper').textContent}
+🎡 Wheel Bonus: ${royalState.wheelPerk}
+💳 Total Due: ₹0.00 (Paid by the Royal Treasury!)`;
+
+      const tempArea = document.createElement('textarea');
+      tempArea.value = summaryText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      try {
+        document.execCommand('copy');
+        playRoyalChime('sparkle');
+        showRoyalToast('📋', 'VIP Pass Copied!', 'Ready to paste & send to claim your treats!');
+      } catch (err) {
+        showRoyalToast('👑', 'Royal Pass Ready!', 'Screenshot your Golden VIP Pass below!');
+      }
+      document.body.removeChild(tempArea);
+    }
+
+    // Initialize animations & wheel on window load
+    window.onload = function () {
+      animateSparkles();
+      drawRoyalWheel();
+      updateVoucherUI();
+    };
+  </script>
+</body>
+</html>
